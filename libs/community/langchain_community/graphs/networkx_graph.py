@@ -126,6 +126,29 @@ class NetworkxEntityGraph:
             relation = self._graph[src][sink]["relation"]
             results.append(f"{src} {relation} {sink}")
         return results
+    
+    def get_entity_pair_knowledge(self, entity: str, target_entity: str) -> List[str]:
+        """Get information about an entity."""
+        import networkx as nx
+
+        # TODO: Have more information-specific retrieval methods
+        if not self._graph.has_node(entity):
+            return []
+        if not self._graph.has_node(target_entity):
+            return []
+        
+        try:
+            path = nx.shortest_path(self._graph, entity, target_entity)
+        except nx.exception.NetworkXNoPath:
+            return []
+
+        results = []
+        for i in range(len(path)-1):
+            src = path[i]
+            sink = path[i+1]
+            relation = self._graph[src][sink]['relation']
+            results.append(f"{src} {relation} {sink}")
+        return results
 
     def write_to_gml(self, path: str) -> None:
         import networkx as nx
