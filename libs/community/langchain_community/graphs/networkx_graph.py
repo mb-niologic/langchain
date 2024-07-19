@@ -128,10 +128,9 @@ class NetworkxEntityGraph:
         return results
     
     def get_entity_pair_knowledge(self, entity: str, target_entity: str) -> List[str]:
-        """Get information about an entity."""
+        """Get shortest path between two entities and return knowledge along path."""
         import networkx as nx
 
-        # TODO: Have more information-specific retrieval methods
         if not self._graph.has_node(entity):
             return []
         if not self._graph.has_node(target_entity):
